@@ -1,0 +1,123 @@
+/* ===== Estilos Globales y Variables de Color ===== */
+:root {
+    --primary-color: #0d6efd; /* Azul principal de Bootstrap */
+    --secondary-color: #6c757d; /* Gris secundario */
+    --info-color: #0dcaf0;      /* Cian para acentos */
+    --light-bg: #f8f9fa;        /* Fondo claro */
+    --dark-bg: #212529;         /* Fondo oscuro para nav/footer */
+    --text-light: #f8f9fa;
+    --text-dark: #212529;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --border-radius: 0.5rem;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* ===== Modo Oscuro (Asegurando contraste) ===== */
+body.dark-mode {
+    background-color: #121212;
+    /* CAMBIO PRINCIPAL: Se establece todo el texto por defecto a un color claro */
+    color: var(--text-light); 
+}
+
+body.dark-mode .bg-light {
+    background-color: #1e1e1e !important;
+}
+
+/* Se asegura que los textos con colores especiales (azules, grises) 
+   se conviertan a un color cian brillante para mantener el contraste. */
+body.dark-mode .text-primary,
+body.dark-mode .text-secondary,
+body.dark-mode .text-muted {
+    color: var(--info-color) !important;
+}
+
+body.dark-mode .card, 
+body.dark-mode .accordion-item {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: var(--text-light); /* <-- CORRECCIÓN APLICADA AQUÍ */
+}
+
+body.dark-mode .accordion-button {
+    background-color: #333;
+    color: var(--text-light); /* Texto del botón también cambia a claro */
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+    background-color: var(--primary-color);
+}
+
+body.dark-mode .social-icon.text-dark i {
+    color: var(--text-light) !important;
+}
+
+
+/* ===== Hero Section ===== */
+.hero {
+    background: linear-gradient(rgba(10, 35, 66, 0.8), rgba(29, 53, 87, 0.8)), url('../Img/Carrobonito.jpg') no-repeat center center;
+    background-size: cover;
+    min-height: 70vh;
+    color: var(--text-light);
+}
+
+/* ===== Tarjetas de Servicio ===== */
+.service-card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+/* ===== Acordeón de Combos ===== */
+.accordion-button {
+    font-weight: bold;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* ===== Contacto y Redes Sociales ===== */
+.social-icon {
+    font-size: 2.5rem;
+    margin: 0 0.5rem;
+    transition: transform 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* ===== Botón de Tema ===== */
+#themeToggle {
+    font-size: 1.2rem;
+    color: var(--info-color);
+}
