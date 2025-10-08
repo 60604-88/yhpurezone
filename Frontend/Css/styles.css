@@ -1,123 +1,325 @@
-/* ===== Estilos Globales y Variables de Color ===== */
-:root {
-    --primary-color: #0d6efd; /* Azul principal de Bootstrap */
-    --secondary-color: #6c757d; /* Gris secundario */
-    --info-color: #0dcaf0;      /* Cian para acentos */
-    --light-bg: #f8f9fa;        /* Fondo claro */
-    --dark-bg: #212529;         /* Fondo oscuro para nav/footer */
-    --text-light: #f8f9fa;
-    --text-dark: #212529;
-    --shadow: 0 4px 15px rgba(0,0,0,0.1);
-    --border-radius: 0.5rem;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
-    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
 }
 
-h1, h2, h3 {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+.navbar-brand {
+    color: #0d6efd !important;
 }
 
-/* ===== Modo Oscuro (Asegurando contraste) ===== */
-body.dark-mode {
-    background-color: #121212;
-    /* CAMBIO PRINCIPAL: Se establece todo el texto por defecto a un color claro */
-    color: var(--text-light); 
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+    padding: 6rem 0;
 }
-
-body.dark-mode .bg-light {
-    background-color: #1e1e1e !important;
-}
-
-/* Se asegura que los textos con colores especiales (azules, grises) 
-   se conviertan a un color cian brillante para mantener el contraste. */
-body.dark-mode .text-primary,
-body.dark-mode .text-secondary,
-body.dark-mode .text-muted {
-    color: var(--info-color) !important;
-}
-
-body.dark-mode .card, 
-body.dark-mode .accordion-item {
-    background-color: #2a2a2a;
-    border-color: #444;
-    color: var(--text-light); /* <-- CORRECCIÓN APLICADA AQUÍ */
-}
-
-body.dark-mode .accordion-button {
-    background-color: #333;
-    color: var(--text-light); /* Texto del botón también cambia a claro */
-}
-
-body.dark-mode .accordion-button:not(.collapsed) {
-    background-color: var(--primary-color);
-}
-
-body.dark-mode .social-icon.text-dark i {
-    color: var(--text-light) !important;
-}
-
-
-/* ===== Hero Section ===== */
-.hero {
-    background: linear-gradient(rgba(10, 35, 66, 0.8), rgba(29, 53, 87, 0.8)), url('../Img/Carrobonito.jpg') no-repeat center center;
-    background-size: cover;
-    min-height: 70vh;
-    color: var(--text-light);
-}
-
-/* ===== Tarjetas de Servicio ===== */
-.service-card {
+/* --- Estilos para la Calculadora --- */
+.calculator-card, .summary-card {
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
     border: none;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+.service-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
 }
 
-.icon-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: inline-flex;
+.service-btn {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
 }
 
-/* ===== Acordeón de Combos ===== */
-.accordion-button {
+.service-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.service-btn.active {
+    background-color: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+}
+
+.slider-container {
+    position: relative;
+}
+
+.slider-value {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: #0d6efd;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
 }
 
-.accordion-button:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+/* --- Estilos para el Resumen de Cotización --- */
+.summary-card hr {
+    border-top: 1px dashed #ccc;
 }
 
-.accordion-button:not(.collapsed) {
-    background-color: var(--primary-color);
-    color: white;
+/* --- Estilos para Sección "Por qué elegirnos" --- */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+    font-size: 1.75rem;
 }
 
-/* ===== Contacto y Redes Sociales ===== */
-.social-icon {
-    font-size: 2.5rem;
-    margin: 0 0.5rem;
-    transition: transform 0.2s ease-in-out;
+/* --- Estilos para Servicios Detallados --- */
+.service-detail-card {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    color: #fff;
+    padding: 3rem;
+    background-size: cover;
+    background-position: center;
+}
+
+.service-detail-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.service-detail-card .card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.service-includes li {
+    margin-bottom: 0.5rem;
+}
+
+.service-includes i {
+    color: #0dcaf0;
+    margin-right: 0.5rem;
+}
+
+.service-cta-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* --- Estilos para Resultados Reales --- */
+.result-card {
+    background-color: #fff;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+}
+
+.result-card .image-container {
+    position: relative;
+}
+
+.result-card .tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.result-card .tag-antes {
+    background-color: #dc3545; /* Rojo */
+}
+
+.result-card .tag-despues {
+    top: auto;
+    bottom: 10px;
+    background-color: #198754; /* Verde */
+}
+
+/* --- Estilos para Sección CTA --- */
+.cta-section {
+    background-color: #0d6efd;
+}
+.result-card .image-container img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+}
+/* --- Estilos para el Modal de Agendamiento --- */
+.date-slots-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.date-slot {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.date-slot:hover {
+    background-color: #f8f9fa;
+}
+
+.date-slot.active {
+    background-color: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+    font-weight: bold;
+}
+/* --- Estilos para los slots de hora --- */
+.time-slots-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.time-slot {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.time-slot:hover {
+    background-color: #f8f9fa;
+}
+
+.time-slot.active {
+    background-color: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+    font-weight: bold;
+}
+
+/* --- Estilos para el Modal de Autenticación Mejorado --- */
+#authModal .modal-content {
+    border-radius: 1rem;
+    border: none;
+}
+
+#authModal .modal-header {
+    border-bottom: none;
+}
+
+#authModal .modal-body {
+    padding: 2rem 2.5rem;
+}
+
+/* Estilos para las pestañas */
+#authTabs {
+    background-color: #f0f2f5;
+    border-radius: 50px;
+    padding: 0.25rem;
+}
+
+#authTabs .nav-link {
+    color: #6c757d;
+    border-radius: 50px;
+    border: none;
+}
+
+#authTabs .nav-link.active {
+    color: #0d6efd;
+    background-color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los campos de texto con íconos */
+#authModal .input-group-text {
+    background-color: #f8f9fa;
+    border: none;
+}
+
+#authModal .form-control {
+    background-color: #f8f9fa;
+    border: none;
+    padding: 0.75rem 1rem;
+}
+
+#authModal .form-control:focus {
+    background-color: #f8f9fa;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+    border-color: transparent;
+}
+
+/* --- Estilos para la Página de Contacto --- */
+.contact-card, .sidebar-card {
+    background-color: #fff;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.info-item i {
+    font-size: 1.5rem;
+    color: #0d6efd;
+}
+.info-item p {
+    margin-bottom: 0;
+    color: #6c757d;
+}
+
+.social-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    color: #fff;
     text-decoration: none;
+    transition: transform 0.2s ease-in-out;
 }
-
-.social-icon:hover {
-    transform: scale(1.2);
+.social-card:hover {
+    transform: scale(1.03);
 }
-
-/* ===== Botón de Tema ===== */
-#themeToggle {
-    font-size: 1.2rem;
-    color: var(--info-color);
+.social-card i {
+    font-size: 2rem;
+    margin-right: 1rem;
 }
+.social-card.facebook { background-color: #1877F2; }
+.social-card.tiktok { background-color: #010101; }

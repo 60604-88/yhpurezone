@@ -49,7 +49,7 @@ const login = async (req, res) => {
     });
 
     // 3. Envía el token al cliente
-    res.json({ message: 'Inicio de sesión exitoso', token: token });
+    res.json({ message: 'Inicio de sesión exitoso', token: token, rol: usuario.rol });
 
     } catch (error) {
     console.error('Error en el login:', error);

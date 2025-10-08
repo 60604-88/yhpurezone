@@ -82,8 +82,30 @@ const cancelarMiCita = async (req, res) => {
     }
 };
 
+// Función para que un cliente añada una nueva dirección
+const addMiDireccion = async (req, res) => {
+    try {
+        const usuarioId = req.usuario.id; // ID del usuario logueado
+        const { direccion_calle, ciudad, detalles } = req.body;
+
+        if (!direccion_calle || !ciudad) {
+            return res.status(400).json({ message: 'La calle y la ciudad son campos requeridos' });
+        }
+
+        const sql = 'INSERT INTO direcciones (usuario_id, direccion_calle, ciudad, detalles) VALUES (?, ?, ?, ?)';
+        const [result] = await db.query(sql, [usuarioId, direccion_calle, ciudad, detalles || null]);
+
+        res.status(201).json({ id: result.insertId, message: 'Dirección añadida exitosamente' });
+
+    } catch (error) {
+        console.error('Error al añadir la dirección:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
 module.exports = {
     getMiPerfil,
     updateMiPerfil,
-    cancelarMiCita
+    cancelarMiCita,
+    addMiDireccion
 };

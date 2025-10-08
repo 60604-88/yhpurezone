@@ -3,200 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YH Pure Zone – Limpieza y Brillo Profesional a Domicilio</title>
-    <meta name="description" content="Lavado de muebles, colchones, salas e interiores de vehículos. Servicio profesional a domicilio en Cali y Jamundí.">
-    
+    <title>YH Pure Zone – Limpieza Profesional de Confianza</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-            <div class="container">
-                <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-                    <img src="Img/logo.jpg" alt="YH Pure Zone Logo" width="40" height="40" class="me-2 rounded-circle">
-                    YH Pure Zone
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#combos">Combos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-                        <li class="nav-item">
-                            <button id="themeToggle" class="btn btn-outline-secondary ms-3 border-0">
-                                <i class="bi bi-brightness-high"></i>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">YH Pure Zone</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-nav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                    
+                    <li id="login-button" class="nav-item ms-lg-3">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#authModal">Iniciar Sesión</button>
+                    </li>
+                    
+                    <li id="account-button" class="nav-item ms-lg-3" style="display: none;">
+                        <a href="cliente/dashboard.html" class="btn btn-primary">Mi Cuenta</a>
+                    </li>
+                    <li id="admin-button" class="nav-item" style="display: none;">
+                        <a href="admin/dashboard.html" class="btn btn-secondary ms-2">Admin</a>
+                    </li>
+                    <li id="logout-button" class="nav-item" style="display: none;">
+                        <button class="btn btn-danger ms-2">Cerrar Sesión</button>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
     <main>
-        <section class="hero text-white text-center d-flex align-items-center justify-content-center">
+        <section class="hero-section text-center text-white">
             <div class="container">
-                <h1 class="display-4 fw-bold">Limpieza Profesional a Domicilio</h1>
-                <p class="lead col-lg-8 mx-auto">Devolvemos la frescura a tus muebles, colchones e interiores de vehículos en Cali y Jamundí.</p>
-                <a href="https://wa.me/573174481169" class="btn btn-info btn-lg mt-3 fw-bold">
-                    <i class="bi bi-whatsapp me-2"></i>Agendar por WhatsApp
-                </a>
-            </div>
-        </section>
-
-        <section id="nosotros" class="py-5">
-            <div class="container">
-                <div class="row align-items-center g-5">
-                    <div class="col-lg-6">
-                        <h2 class="fw-bold text-primary">Quiénes Somos</h2>
-                        <p class="lead">En <strong>YH Pure Zone</strong> nos especializamos en el <strong>lavado y desmanchado profundo</strong> de tus espacios más importantes. Nuestro objetivo es devolver la higiene y comodidad que mereces con un servicio confiable y de máxima calidad.</p>
-                        <p>📍 Servicio <strong>a domicilio</strong> en <strong>Cali y Jamundí</strong>. ¡Llevamos la limpieza a tu hogar o empresa!</p>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden">
-                            <video controls autoplay muted loop>
-                                <source src="/Video/prueba1.mp4" type="video/mp4">
-                                Tu navegador no soporta el video.
-                            </video>
-                        </div>
-                    </div>
+                <h1 class="display-4 fw-bold">Limpieza Profesional de Confianza</h1>
+                <p class="lead my-4">Servicios especializados para vehículos, muebles y colchones con tecnología avanzada.</p>
+                <div class="d-flex justify-content-center gap-4">
+                    <span><i class="bi bi-patch-check-fill"></i> Garantía de Calidad</span>
+                    <span><i class="bi bi-lightning-fill"></i> Servicio Rápido</span>
+                    <span><i class="bi bi-shield-fill-check"></i> 100% Confiable</span>
                 </div>
             </div>
         </section>
 
-        <section id="servicios" class="py-5 bg-light">
+        <section id="calculadora" class="py-5 bg-light">
             <div class="container">
                 <div class="text-center mb-5">
-                    <h2 class="fw-bold text-primary">Nuestros Servicios</h2>
-                    <p class="lead text-muted">Soluciones de limpieza para cada una de tus necesidades.</p>
+                    <h2 class="fw-bold">Calcula tu Cotización al Instante</h2>
+                    <p class="text-muted">Selecciona el servicio que necesitas y obtén un precio inmediatamente.</p>
                 </div>
-                
-                <div class="row g-4">
-                    <div class="col-lg-4 d-flex align-items-stretch">
-                        <div class="card service-card">
-                            <div class="card-body text-center">
-                                <div class="icon-circle bg-primary text-white mb-3"><i class="bi bi-car-front-fill"></i></div>
-                                <h3 class="card-title h4 fw-bold">Vehículos</h3>
-                                <p class="card-text">Limpieza detallada de interior y exterior. Dejamos tu auto impecable, cuidando cada detalle.</p>
+                <div class="row g-lg-5">
+                    <div class="col-lg-7">
+                        <div class="calculator-card p-4">
+                            <h5 class="mb-2 fw-bold"><i class="bi bi-ui-checks-grid me-2"></i>Selecciona tu Servicio</h5>
+                            <p class="text-muted small mb-4">Elige la categoría de limpieza que necesitas</p>
+                            <div id="service-buttons-container" class="service-buttons mb-4 text-center">
+                                <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                                <p class="text-muted mt-2">Cargando servicios...</p>
+                            </div>
+                            <div id="dynamic-options-container"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="summary-card p-4 sticky-top" style="top: 120px;">
+                            <h5 class="fw-bold mb-3">Resumen de Cotización</h5>
+                            <div id="quote-summary">
+                                <div class="text-center py-5">
+                                    <i class="bi bi-calculator-fill display-4 text-muted"></i>
+                                    <p class="text-muted mt-3">Selecciona un servicio para ver el precio.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 d-flex align-items-stretch">
-                        <div class="card service-card">
-                            <div class="card-body text-center">
-                                <div class="icon-circle bg-info text-white mb-3"><i class="bi bi-lamp-fill"></i></div>
-                                <h3 class="card-title h4 fw-bold">Muebles</h3>
-                                <p class="card-text">Eliminamos manchas, suciedad y ácaros de tus sofás y sillas con maquinaria profesional.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 d-flex align-items-stretch">
-                        <div class="card service-card">
-                             <div class="card-body text-center">
-                                <div class="icon-circle bg-primary text-white mb-3"><i class="bi bi-layers-fill"></i></div>
-                                <h3 class="card-title h4 fw-bold">Colchones</h3>
-                                <p class="card-text">Desinfección profunda para un descanso saludable, libre de alérgenos y bacterias.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-5 pt-4">
-                    <h3 class="fw-bold text-secondary">Resultados que Hablan por Sí Mismos</h3>
-                </div>
-                <div class="row g-4 mt-3">
-                    <div class="col-md-6"><img src="Img/Mueblesfeo.jpg" alt="Mueble antes de limpiar" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-md-6"><img src="Img/Mueblesbonito.jpg" alt="Mueble después de limpiar" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-md-6"><img src="Img/Colchonfeo.jpg" alt="Colchón antes de limpiar" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-md-6"><img src="Img/Colchonbonito.jpg" alt="Colchón después de limpiar" class="img-fluid rounded shadow-sm"></div>
                 </div>
             </div>
         </section>
 
-        <section id="combos" class="py-5">
+        <section id="por-que-elegirnos" class="py-5">
             <div class="container">
                 <div class="text-center mb-5">
-                    <h2 class="fw-bold text-primary">Aprovecha Nuestros Combos</h2>
-                    <p class="lead text-muted">Ahorra combinando nuestros servicios más populares.</p>
+                    <h2 class="fw-bold">¿Por qué elegir YH Pure Zone?</h2>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="accordion" id="accordionCombos">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                        🎁 Combo 1: Interior Completo de Vehículo
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionCombos">
-                                    <div class="accordion-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Lavado de panel, carteras y techo.</li>
-                                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Hidratación de plásticos.</li>
-                                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Aspirado profundo y limpieza de baúl.</li>
-                                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Vaporización y aromatización.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                        🎁 Combo 2: Desmantelado Interior
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionCombos">
-                                    <div class="accordion-body">
-                                        Incluye todo el Combo 1, más bajada de sillas para un lavado a fondo de la alfombra y limpieza total a vapor.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                                        🎁 Combo 3: Exterior Completo
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionCombos">
-                                    <div class="accordion-body">
-                                        Lavado detallado de carrocería, bordes de puertas, llantas, rines y brillada final opcional para un acabado perfecto.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="row text-center g-4">
+                    <div class="col-md-4">
+                        <div class="feature-icon mb-3"><i class="bi bi-gem"></i></div>
+                        <h5 class="fw-bold">Tecnología Avanzada</h5>
+                        <p class="text-muted">Utilizamos equipos especializados y productos ecológicos de última generación.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacto" class="py-5 bg-light text-center">
-            <div class="container">
-                <h2 class="fw-bold text-primary">¿Listo para Renovar tus Espacios?</h2>
-                <p class="lead my-3">Contáctanos hoy mismo y agenda tu servicio.</p>
-                <a href="https://wa.me/573174481169" class="btn btn-success btn-lg mb-4">
-                    <i class="bi bi-whatsapp me-2"></i>Escríbenos por WhatsApp
-                </a>
-                <div class="mt-4">
-                    <p class="mb-2">Síguenos en nuestras redes:</p>
-                    <a href="https://www.facebook.com/share/16jfT7VVzq/" target="_blank" class="social-icon text-primary"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.instagram.com/yh_purezonecali/" target="_blank" class="social-icon text-danger"><i class="bi bi-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@york392" target="_blank" class="social-icon text-dark"><i class="bi bi-tiktok"></i></a>
+                    <div class="col-md-4">
+                        <div class="feature-icon mb-3"><i class="bi bi-shield-check"></i></div>
+                        <h5 class="fw-bold">Garantía Total</h5>
+                        <p class="text-muted">Todos nuestros servicios incluyen garantía de satisfacción al 100%.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-icon mb-3"><i class="bi bi-clock-history"></i></div>
+                        <h5 class="fw-bold">Servicio Express</h5>
+                        <p class="text-muted">Agendamiento flexible y servicios realizados en el menor tiempo posible.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <p class="mb-0">&copy; 2025 YH Pure Zone – Todos los derechos reservados.</p>
-        </div>
-    </footer>
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <h1 class="h3 fw-bold">YH Pure Zone</h1>
+                        <p class="text-muted">Accede a tu cuenta para gestionar tus servicios</p>
+                    </div>
 
+                    <ul class="nav nav-pills nav-fill mb-4" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-panel" type="button" role="tab">Iniciar Sesión</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-panel" type="button" role="tab">Registrarse</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="authTabsContent">
+                        <div class="tab-pane fade show active" id="login-panel" role="tabpanel">
+                            <form id="loginForm">
+                                <label for="login-email" class="form-label">Email</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="login-email" placeholder="tu@email.com" required>
+                                </div>
+                                <label for="login-password" class="form-label">Contraseña</label>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control" id="login-password" placeholder="Tu contraseña" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Iniciar Sesión</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="register-panel" role="tabpanel">
+                            <form id="registerForm">
+                                <label for="register-name" class="form-label">Nombre Completo</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control" id="register-name" placeholder="Tu nombre completo" required>
+                                </div>
+                                    <label for="register-email" class="form-label">Email</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="register-email" placeholder="tu@email.com" required>
+                                </div>
+                                <label for="register-phone" class="form-label">Teléfono</label>
+                                    <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-phone"></i></span>
+                                    <input type="tel" class="form-control" id="register-phone" placeholder="+57 9 1234 5678" required>
+                                </div>
+                                <label for="register-password" class="form-label">Contraseña</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control" id="register-password" placeholder="Mínimo 6 caracteres" required>
+                                </div>
+                                <label for="register-confirm-password" class="form-label">Confirmar Contraseña</label>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                    <input type="password" class="form-control" id="register-confirm-password" placeholder="Repite tu contraseña" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Crear Cuenta</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="alert-container-modal" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel"><i class="bi bi-calendar-check me-2"></i>Agendar Cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div id="step-date"><h6 class="fw-bold">Paso 1 de 3: Selecciona una Fecha</h6><div id="date-slots-container" class="date-slots-container"></div></div>
+                            <div id="step-time" style="display: none;"><h6 class="fw-bold">Paso 2 de 3: Selecciona una Hora</h6><div id="time-slots-container" class="time-slots-container"></div></div>
+                            <div id="step-details" style="display: none;"><h6 class="fw-bold">Paso 3 de 3: Confirma tus Datos</h6><div id="details-container"></div></div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="summary-card p-3"><h6 class="fw-bold">Resumen de tu Cita</h6><div id="booking-summary"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="prevStepButton" style="display: none;">Paso Anterior</button>
+                    <button type="button" class="btn btn-primary" id="nextStepButton">Confirmar Cita</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Frontend/js/main.js"></script>
+    <script src="/Frontend/js/auth.js"></script>
+    <script src="/Frontend/js/quote-calculator.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/JavaScript/scripts.js"></script> </body>
+</body>
 </html>
