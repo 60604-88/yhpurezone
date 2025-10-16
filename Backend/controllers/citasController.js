@@ -79,20 +79,30 @@ const getCitasByUsuario = async (req, res) => {
 };
 
 // UPDATE (Admin): Función para actualizar el estado de una cita
+
 const updateCitaStatus = async (req, res) => {
     try {
-        const { id } = req.params; // ID de la cita
-        const { estado } = req.body; // Nuevo estado: "completada" o "cancelada"
-
-        // Validamos que el estado sea uno de los permitidos
-        if (!['completada', 'cancelada'].includes(estado)) {
+        const { id } = req.params;
+        const { estado } = req.body;
+        if (!['completada', 'cancelada', 'confirmada'].includes(estado)) {
             return res.status(400).json({ message: 'Estado no válido' });
         }
-
         const sql = 'UPDATE citas SET estado = ? WHERE id = ?';
-        await db.query(sql, [estado, id]);
+        const [result] = await db.query(sql, [estado, id]);
 
+        // Si no se encontró la fila para actualizar
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Cita no encontrada.' });
+        }
+        
+        // Si la fila se encontró pero no cambió (porque el estado ya era ese)
+        if (result.changedRows === 0) {
+            return res.json({ message: 'El estado de la cita ya era ese, no se realizaron cambios.' });
+        }
+        
+        // Si todo salió bien y hubo un cambio
         res.json({ message: `Cita marcada como ${estado}` });
+
     } catch (error) {
         console.error('Error al actualizar el estado de la cita:', error);
         res.status(500).json({ message: 'Error en el servidor' });

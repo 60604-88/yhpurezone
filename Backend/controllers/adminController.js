@@ -52,9 +52,15 @@ const createCitaAdmin = async (req, res) => {
 // CREATE: Función para crear un nuevo servicio
 const createServicio = async (req, res) => {
     try {
-    const { nombre, precio_base, modelo_precio, nombre_unidad } = req.body;
-    const sql = 'INSERT INTO servicios (nombre, precio_base, modelo_precio, nombre_unidad) VALUES (?, ?, ?, ?)';
-    const [result] = await db.query(sql, [nombre, precio_base, modelo_precio, nombre_unidad]);
+    // 1. Obtenemos los campos correctos que envía el nuevo formulario
+    const { nombre, descripcion, categoria } = req.body;
+
+    // 2. La consulta SQL ahora solo inserta en las columnas que existen
+    const sql = 'INSERT INTO servicios (nombre, descripcion, categoria) VALUES (?, ?, ?)';
+    
+    // 3. Pasamos los valores correctos a la consulta
+    const [result] = await db.query(sql, [nombre, descripcion, categoria]);
+
     res.status(201).json({ id: result.insertId, message: 'Servicio creado exitosamente' });
     } catch (error) {
     console.error('Error al crear el servicio:', error);
@@ -65,14 +71,25 @@ const createServicio = async (req, res) => {
 // UPDATE: Función para actualizar un servicio existente
 const updateServicio = async (req, res) => {
     try {
-    const { id } = req.params; // Obtenemos el ID de la URL
-    const { nombre, precio_base, modelo_precio, nombre_unidad } = req.body;
-    const sql = 'UPDATE servicios SET nombre = ?, precio_base = ?, modelo_precio = ?, nombre_unidad = ? WHERE id = ?';
-    await db.query(sql, [nombre, precio_base, modelo_precio, nombre_unidad, id]);
-    res.json({ message: 'Servicio actualizado exitosamente' });
+        const { id } = req.params;
+        const fieldsToUpdate = req.body; // Obtenemos los campos a actualizar desde el body
+
+        // Verificamos si hay algo que actualizar
+        if (Object.keys(fieldsToUpdate).length === 0) {
+            return res.status(400).json({ message: 'No hay campos para actualizar.' });
+        }
+
+        const sql = 'UPDATE servicios SET ? WHERE id = ?';
+        const [result] = await db.query(sql, [fieldsToUpdate, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Servicio no encontrado.' });
+        }
+
+        res.json({ message: 'Servicio actualizado exitosamente.' });
     } catch (error) {
-    console.error('Error al actualizar el servicio:', error);
-    res.status(500).json({ message: 'Error en el servidor' });
+        console.error('Error al actualizar el servicio:', error);
+        res.status(500).json({ message: 'Error en el servidor.' });
     }
 };
 
@@ -90,6 +107,123 @@ const deleteServicio = async (req, res) => {
     }
 };
 
+// Función para eliminar un cliente
+const deleteCliente = async (req, res) => {
+    try {
+        const { id } = req.params; // ID del cliente a eliminar
+        const sql = "DELETE FROM usuarios WHERE id = ? AND rol = 'cliente'";
+        const [result] = await db.query(sql, [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Cliente no encontrado o no tienes permiso para eliminarlo.' });
+        }
+
+        res.json({ message: 'Cliente eliminado exitosamente.' });
+    } catch (error) {
+        console.error('Error al eliminar el cliente:', error);
+        // Manejar errores de llave foránea (si el cliente tiene citas)
+        if (error.code === 'ER_ROW_IS_REFERENCED_2') {
+            return res.status(400).json({ message: 'No se puede eliminar el cliente porque tiene citas asociadas. Primero debes eliminar sus citas.' });
+        }
+        res.status(500).json({ message: 'Error en el servidor.' });
+    }
+};
+
+// Función para eliminar un servicio permanentemente
+const deleteServicioPermanente = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = "DELETE FROM servicios WHERE id = ?";
+        const [result] = await db.query(sql, [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Servicio no encontrado.' });
+        }
+        res.json({ message: 'Servicio eliminado permanentemente.' });
+    } catch (error) {
+        console.error('Error al eliminar el servicio:', error);
+        if (error.code === 'ER_ROW_IS_REFERENCED_2') {
+            return res.status(400).json({ message: 'No se puede eliminar el servicio porque está asociado a citas existentes.' });
+        }
+        res.status(500).json({ message: 'Error en el servidor.' });
+    }
+};
+
+// Obtiene TODOS los servicios (activos e inactivos) para el panel de admin
+/**
+ * @function getAllServiciosAdmin
+ * @description Obtiene TODOS los servicios (activos e inactivos) y los devuelve
+ * en una estructura anidada con sus opciones y variaciones de precio.
+ */
+const getAllServiciosAdmin = async (req, res) => {
+    try {
+        // 1. Obtenemos los datos de las tres tablas relacionadas
+        const [servicios] = await db.query('SELECT * FROM servicios ORDER BY categoria, nombre');
+        const [opciones] = await db.query('SELECT * FROM servicio_opciones');
+        const [variaciones] = await db.query('SELECT * FROM opcion_variaciones');
+
+        // 2. Ensamblamos la estructura de datos anidada
+        const serviciosConOpciones = servicios.map(servicio => {
+            // Para cada servicio, encontramos sus opciones correspondientes
+            const opcionesDelServicio = opciones
+                .filter(opcion => opcion.servicio_id === servicio.id)
+                .map(opcion => {
+                    // Para cada opción, encontramos sus variaciones de precio
+                    const variacionesDeLaOpcion = variaciones.filter(variacion => variacion.opcion_id === opcion.id);
+                    return { ...opcion, variaciones: variacionesDeLaOpcion };
+                });
+            return { ...servicio, opciones: opcionesDelServicio };
+        });
+
+        res.json(serviciosConOpciones);
+
+    } catch (error) {
+        console.error('Error al obtener los servicios para admin:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
+// --- FUNCIÓN PARA OPCIONES Y EDICION DE SERVICIOS ---
+// Permite añadir una nueva opción de precio (ej: "Tamaño") a un servicio existente.
+const addServicioOpcion = async (req, res) => {
+    try {
+        const { servicio_id } = req.params; // ID del servicio al que pertenece la opción
+        const { nombre } = req.body; // Datos de la nueva opción
+
+        if (!nombre) {
+            return res.status(400).json({ message: 'El nombre es requerido.' });
+        }
+
+        const sql = 'INSERT INTO servicio_opciones (servicio_id, nombre) VALUES (?, ?)';
+        const [result] = await db.query(sql, [servicio_id, nombre]);
+
+        res.status(201).json({ id: result.insertId, message: 'Opción añadida exitosamente.' });
+    } catch (error) {
+        console.error('Error al añadir la opción de servicio:', error);
+        res.status(500).json({ message: 'Error en el servidor.' });
+    }
+};
+
+// --- FUNCIÓN AÑADIR PRECIOS Y VARIACIONES---
+// Permite añadir una nueva variación de precio (ej: "Grande: $50.000") a una opción existente.
+const addOpcionVariacion = async (req, res) => {
+    try {
+        const { opcion_id } = req.params; // ID de la opción a la que pertenece la variación
+        const { nombre, precio } = req.body; // Datos de la nueva variación
+
+        if (!nombre || !precio) {
+            return res.status(400).json({ message: 'El nombre y el precio son requeridos.' });
+        }
+
+        const sql = 'INSERT INTO opcion_variaciones (opcion_id, nombre, precio) VALUES (?, ?, ?)';
+        const [result] = await db.query(sql, [opcion_id, nombre, precio]);
+
+        res.status(201).json({ id: result.insertId, message: 'Variación de precio añadida exitosamente.' });
+    } catch (error) {
+        console.error('Error al añadir la variación de opción:', error);
+        res.status(500).json({ message: 'Error en el servidor.' });
+    }
+};
 
 module.exports = {
     getAllClientes,
@@ -97,4 +231,9 @@ module.exports = {
     createServicio,
     updateServicio,
     deleteServicio,
+    deleteCliente,
+    deleteServicioPermanente,
+    getAllServiciosAdmin,
+    addServicioOpcion,
+    addOpcionVariacion
 }; 

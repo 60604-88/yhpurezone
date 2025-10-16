@@ -1,0 +1,232 @@
+:root {
+    --sidebar-width: 250px;
+    --primary-blue: #0d6efd; /* Color principal de la marca */
+    --sidebar-bg: #0a2342; /* Un azul oscuro para el fondo */
+    --sidebar-link-color: rgba(255, 255, 255, 0.6);
+    --sidebar-link-hover: #fff;
+}
+
+body {
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
+
+.dashboard-wrapper {
+    display: flex;
+}
+
+/* --- Estilos de la Barra Lateral --- */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header .brand {
+    color: #fff;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidebar .nav-link {
+    color: var(--sidebar-link-color);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    border-left: 3px solid transparent;
+}
+
+.sidebar .nav-link i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--sidebar-link-hover);
+}
+
+.sidebar .nav-link.active {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--sidebar-link-hover);
+    font-weight: 500;
+    border-left: 3px solid var(--primary-blue);
+}
+
+/* --- Estilos del Contenido Principal --- */
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    transition: all 0.3s;
+}
+
+.main-header {
+    display: none;
+    background: #fff;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+
+/* --- Diseño Responsivo --- */
+@media (max-width: 992px) {
+    .sidebar {
+        left: calc(-1 * var(--sidebar-width)); /* CORREGIDO: Ocultar sidebar por defecto */
+    }
+    
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .main-header {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Esta clase la añadiremos con JavaScript para mostrar el menú */
+    .sidebar.active {
+        left: 0;
+    }
+}
+/* --- Estilos para el Overlay --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Debajo del sidebar, pero encima del contenido */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- Estilos para la Página de Citas --- */
+.cita-list-header, .cita-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 1.5fr 1fr 1fr;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.cita-list-header {
+    font-weight: bold;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.cita-row:hover {
+    background-color: #f8f9fa;
+}
+
+/* Estilos para los badges de estado */
+.status-badge {
+    padding: 0.25em 0.6em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 50px;
+}
+
+.status-confirmada { background-color: rgba(13, 110, 253, 0.1); color: #0d6efd; }
+.status-completada { background-color: rgba(25, 135, 84, 0.1); color: #198754; }
+.status-cancelada { background-color: rgba(108, 117, 125, 0.1); color: #6c757d; }
+.status-en-proceso { background-color: rgba(255, 193, 7, 0.1); color: #ffc107; }
+.status-pendiente { background-color: rgba(220, 53, 69, 0.1); color: #dc3545; } 
+
+/* --- Estilos para la Página de Clientes --- */
+.kpi-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.kpi-card .icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.bg-primary-light { background-color: rgba(13, 110, 253, 0.1); }
+.bg-success-light { background-color: rgba(25, 135, 84, 0.1); }
+.bg-info-light { background-color: rgba(13, 202, 240, 0.1); }
+.bg-warning-light { background-color: rgba(255, 193, 7, 0.1); }
+
+.client-list-header, .client-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.client-list-header {
+    font-weight: bold;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.client-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.client-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.client-row .text-muted {
+    font-size: 0.9rem;
+}
+
+.action-btn {
+    color: #6c757d;
+    text-decoration: none;
+    margin: 0 0.25rem;
+    font-size: 1.1rem;
+}
+.action-btn:hover { color: #0d6efd; }
+.action-btn.delete:hover { color: #dc3545; }
+
+.service-row-clickable {
+    cursor: pointer;
+}

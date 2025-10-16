@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Servicios - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/Frontend/Admin/css/dashboard-admin.css">
+    <script src="/Frontend/Admin/js/auth-guard.js"></script>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="brand">YH Pure Zone</a>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="citas.html"><i class="bi bi-calendar-check"></i><span>Citas</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="clientes.html"><i class="bi bi-people-fill"></i><span>Clientes</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="servicios.html"><i class="bi bi-box-seam"></i><span>Servicios</span></a>
+                </li>
+            </ul>
+            <ul class="nav flex-column mt-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="admin-logout-button"><i class="bi bi-box-arrow-left"></i><span>Cerrar Sesión</span></a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="overlay"></div>
+
+        <main class="main-content">
+            <header class="main-header">
+                <button class="btn" id="menu-toggle"><i class="bi bi-list fs-4"></i></button>
+                <h5 class="ms-3 mb-0">Gestión de Servicios</h5>
+            </header>
+            
+            <div class="content-body container-fluid p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="mt-4">Gestión de Servicios</h1>
+                        <p class="text-muted">Administra los servicios disponibles y sus precios.</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal"><i class="bi bi-plus-circle me-2"></i>Agregar Servicio</button>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div id="servicios-container">
+                            <div class="text-center p-5">
+                                <div class="spinner-border text-primary"></div>
+                                <p class="mt-2">Cargando servicios...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal fade" id="addServiceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="addServiceForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Agregar Nuevo Servicio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del Servicio</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label">Categoría</label>
+                            <select class="form-select" id="categoria" required>
+                                <option value="" disabled selected>Selecciona una categoría...</option>
+                                <option value="Vehículos">Vehículos</option>
+                                <option value="Muebles">Muebles</option>
+                                <option value="Colchones">Colchones</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Servicio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editServiceModalLabel">Editar Servicio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div id="modal-edit-service-body" class="modal-body">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Frontend/Admin/js/dashboard.js"></script>
+    <script src="/Frontend/Admin/js/servicios.js"></script>
+</body>
+</html>
