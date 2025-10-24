@@ -357,8 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error(data.message);
             
             // 3. Si todo sale bien, cerramos el modal y mostramos un mensaje de éxito
-            bookingModal.hide();
-            alert('¡Tu cita ha sido agendada exitosamente!');
+            window.location.href = `confirmacion.html?id=${data.citaId}`;
             
         } catch (error) {
             console.error('Error al agendar la cita:', error);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createCita, getAllCitasAdmin, getCitasByUsuario, updateCitaStatus } = require('../controllers/citasController');
+const { createCita, getAllCitasAdmin, getCitasByUsuario, updateCitaStatus, getCitaById } = require('../controllers/citasController');
 const { protect, isAdmin } = require('../middleware/authMiddleware'); // IMPORTA EL MIDDLEWARE (PROTECCION)
 
 // Ruta para crear una nueva cita (pública/cliente)
@@ -16,5 +16,8 @@ router.get('/cliente/:usuarioId', getCitasByUsuario);
 
 // Ruta para que el admin actualice el estado de una cita
 router.put('/admin/:id/status', protect, isAdmin, updateCitaStatus);
+
+// Ruta para obtener una sola cita por su Id
+router.get('/:id', protect, getCitaById); 
 
 module.exports = router;

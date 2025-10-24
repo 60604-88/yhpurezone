@@ -29,7 +29,7 @@ const createCita = async (req, res) => {
     // Si llegamos aquí sin errores, guardamos todos los cambios permanentemente.
     await connection.commit();
 
-    res.status(201).json({ id: nuevaCitaId, message: 'Cita creada exitosamente' });
+    res.status(201).json({ citaId: nuevaCitaId, message: 'Cita creada exitosamente' });
 
     } catch (error) {
     // --- Revertimos la transacción ---
@@ -109,10 +109,54 @@ const updateCitaStatus = async (req, res) => {
     }
 };
 
+// Obtener los Datos de una sola Cita
+
+const getCitaById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const usuarioId = req.usuario.id; // Obtenido del token
+
+        // Consulta principal para obtener los datos de la cita
+        const sql = `
+            SELECT 
+                c.id, c.fecha_hora_cita, c.precio_total, c.estado,
+                u.nombre_completo as cliente_nombre, u.email as cliente_email, u.telefono as cliente_telefono,
+                d.direccion_calle
+            FROM citas c
+            JOIN usuarios u ON c.usuario_id = u.id
+            JOIN direcciones d ON c.direccion_id = d.id
+            WHERE c.id = ? AND c.usuario_id = ?
+        `;
+        const [citas] = await db.query(sql, [id, usuarioId]);
+
+        if (citas.length === 0) {
+            return res.status(404).json({ message: 'Cita no encontrada o no tienes permiso para verla.' });
+        }
+
+        const cita = citas[0];
+
+        // Consulta para obtener los servicios de esa cita
+        const serviciosSql = `
+            SELECT s.nombre FROM citas_servicios cs
+            JOIN servicios s ON cs.servicio_id = s.id
+            WHERE cs.cita_id = ?
+        `;
+        const [servicios] = await db.query(serviciosSql, [id]);
+        cita.servicios = servicios;
+
+        res.json(cita);
+    } catch (error) {
+        console.error('Error al obtener la cita por ID:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
+
 // Exportamos todas las funciones
 module.exports = {
     createCita,
     getAllCitasAdmin,
     getCitasByUsuario,
-    updateCitaStatus
+    updateCitaStatus,
+    getCitaById
 };
