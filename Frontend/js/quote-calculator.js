@@ -327,14 +327,16 @@ document.addEventListener('DOMContentLoaded', () => {
             direccion_id: bookingState.selectedAddressId,
             fecha_hora_cita: bookingState.selectedTime.toISOString().slice(0, 19).replace('T', ' '),
             precio_total: finalQuote.price,
-            servicios: Object.keys(currentSelections).map(opcionId => {
-                const variacionId = currentSelections[opcionId];
-                const opcion = selectedService.opciones.find(o => o.id == opcionId);
-                const variacion = opcion.variaciones.find(v => v.id == variacionId);
+            servicios: Object.values(currentSelections).map(variacionId => {
+                let variacionEncontrada = null;
+                selectedService.opciones.forEach(opcion => {
+                    const v = opcion.variaciones.find( v => v.id === variacionId);
+                    if (v) variacionEncontrada = v;
+                });
                 return { 
-                    id: selectedService.id,
+                    id: variacionId,
                     cantidad: 1,
-                    precio: variacion.precio
+                    precio: variacionEncontrada ? variacionEncontrada.precio : 0
                 };
             })
         };

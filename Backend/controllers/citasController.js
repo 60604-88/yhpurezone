@@ -19,7 +19,7 @@ const createCita = async (req, res) => {
 
     // 2. Insertar cada servicio de la cita en la tabla `citas_servicios`
     const serviciosPromises = servicios.map(servicio => {
-        const servicioSql = 'INSERT INTO citas_servicios (cita_id, servicio_id, cantidad, precio_reserva) VALUES (?, ?, ?, ?)';
+        const servicioSql = 'INSERT INTO citas_servicios (cita_id, opcion_variacion_id, cantidad, precio_reserva) VALUES (?, ?, ?, ?)';
         return connection.query(servicioSql, [nuevaCitaId, servicio.id, servicio.cantidad, servicio.precio]);
     });
     
@@ -44,9 +44,11 @@ const createCita = async (req, res) => {
 };
 
 // READ (Admin): Función para obtener TODAS las citas
+// REEMPLAZA tu función 'getAllCitasAdmin' existente por esta:
+
 const getAllCitasAdmin = async (req, res) => {
     try {
-        // Esta consulta es más compleja porque une varias tablas para obtener información útil
+        // 1. Consulta principal 
         const sql = `
             SELECT 
                 c.id, c.fecha_hora_cita, c.precio_total, c.estado,
@@ -58,7 +60,33 @@ const getAllCitasAdmin = async (req, res) => {
             ORDER BY c.fecha_hora_cita DESC;
         `;
         const [citas] = await db.query(sql);
+
+        // 2. Iteramos sobre cada cita para adjuntar los nombres de los servicios
+        for (let cita of citas) {
+            
+            // 2a. Obtenemos los nombres correctos usando el JOIN complejo
+            const queryServicios = `
+                SELECT 
+                    ov.nombre AS nombre_variacion,
+                    s.nombre AS nombre_servicio_general
+                FROM citas_servicios cs
+                JOIN opcion_variaciones ov ON cs.opcion_variacion_id = ov.id
+                JOIN servicio_opciones so ON ov.opcion_id = so.id
+                JOIN servicios s ON so.servicio_id = s.id
+                WHERE cs.cita_id = ?;
+            `;
+            const [servicios] = await db.query(queryServicios, [cita.id]);
+
+            // 2b. Formateamos los nombres (ej: "Lavado Básico (Automóvil)")
+            const nombresFormateados = servicios.map(s => `${s.nombre_servicio_general} (${s.nombre_variacion})`);
+            
+            // 2c. Adjuntamos el array de nombres a la cita
+            cita.servicios = nombresFormateados; 
+        }
+
+        // 3. Enviamos el JSON completo al frontend
         res.json(citas);
+
     } catch (error) {
         console.error('Error al obtener las citas para admin:', error);
         res.status(500).json({ message: 'Error en el servidor' });
@@ -114,9 +142,9 @@ const updateCitaStatus = async (req, res) => {
 const getCitaById = async (req, res) => {
     try {
         const { id } = req.params;
-        const usuarioId = req.usuario.id; // Obtenido del token
+        const usuarioId = req.usuario.id; 
 
-        // Consulta principal para obtener los datos de la cita
+        // 1. Consulta principal (está bien)
         const sql = `
             SELECT 
                 c.id, c.fecha_hora_cita, c.precio_total, c.estado,
@@ -132,17 +160,23 @@ const getCitaById = async (req, res) => {
         if (citas.length === 0) {
             return res.status(404).json({ message: 'Cita no encontrada o no tienes permiso para verla.' });
         }
-
         const cita = citas[0];
 
-        // Consulta para obtener los servicios de esa cita
+        // 2. Consulta de servicios (CORREGIDA)
         const serviciosSql = `
-            SELECT s.nombre FROM citas_servicios cs
-            JOIN servicios s ON cs.servicio_id = s.id
-            WHERE cs.cita_id = ?
+            SELECT 
+                ov.nombre AS nombre_variacion,
+                s.nombre AS nombre_servicio_general
+            FROM citas_servicios cs
+            JOIN opcion_variaciones ov ON cs.opcion_variacion_id = ov.id
+            JOIN servicio_opciones so ON ov.opcion_id = so.id
+            JOIN servicios s ON so.servicio_id = s.id
+            WHERE cs.cita_id = ?;
         `;
         const [servicios] = await db.query(serviciosSql, [id]);
-        cita.servicios = servicios;
+        
+        // Formateamos los nombres
+        cita.servicios = servicios.map(s => `${s.nombre_servicio_general} (${s.nombre_variacion})`);
 
         res.json(cita);
     } catch (error) {
@@ -150,7 +184,6 @@ const getCitaById = async (req, res) => {
         res.status(500).json({ message: 'Error en el servidor' });
     }
 };
-
 
 // Exportamos todas las funciones
 module.exports = {

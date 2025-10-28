@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             todasLasCitas.forEach(cita => {
                 const statusClass = `status-${cita.estado.toLowerCase().replace(' ', '-')}`;
+                const servicioNombres = cita.servicios && cita.servicios.length > 0 
+                                        ? cita.servicios.join('<br>')
+                                        : 'Servicio no especificado';
                 listHTML += `
                     <div class="cita-row" id="cita-row-${cita.id}">
                         <div>
@@ -33,8 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="small text-muted">ID Cita: #${cita.id}</div>
                         </div>
                         <div>
-                            <div class="small fw-bold">Limpieza Premium</div>
-                            <div class="small text-muted">Duración: 150 min</div>
+                            <div class="small fw-bold">${servicioNombres}</div>
                         </div>
                         <div class="small">${formatDate(cita.fecha_hora_cita)}</div>
                         <div class="small text-muted">${cita.direccion}</div>

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Si no hay ID, redirigir al inicio para evitar errores
         window.location.href = 'index.html';
         return;
-    }
+    } 
 
     // 2. Pedir los detalles de esa cita específica al backend
     const token = localStorage.getItem('authToken');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 3. Rellenar la página con los datos recibidos
         document.getElementById('cita-fecha').textContent = new Date(cita.fecha_hora_cita).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('cita-hora').textContent = new Date(cita.fecha_hora_cita).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('cita-servicio').textContent = cita.servicios.map(s => s.nombre).join(', ');
+        document.getElementById('cita-servicio').textContent = cita.servicios.join(', ');
         document.getElementById('cita-numero').textContent = `#${cita.id.toString().padStart(6, '0')}`;
         
         document.getElementById('cliente-nombre').textContent = cita.cliente_nombre;

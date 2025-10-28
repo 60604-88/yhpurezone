@@ -30,7 +30,7 @@ const createCitaAdmin = async (req, res) => {
 
     // 2. Insertar los servicios asociados a la cita
     const serviciosPromises = servicios.map(servicio => {
-        const servicioSql = 'INSERT INTO citas_servicios (cita_id, servicio_id, cantidad, precio_reserva) VALUES (?, ?, ?, ?)';
+        const servicioSql = 'INSERT INTO citas_servicios (cita_id, opcion_variacion_id, cantidad, precio_reserva) VALUES (?, ?, ?, ?)';
         return connection.query(servicioSql, [nuevaCitaId, servicio.id, servicio.cantidad, servicio.precio]);
     });
     await Promise.all(serviciosPromises);

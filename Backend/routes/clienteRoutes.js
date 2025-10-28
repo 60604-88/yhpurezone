@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { protect } = require('../middleware/authMiddleware');
-const { getMiPerfil, updateMiPerfil, cancelarMiCita, addMiDireccion } = require('../controllers/clienteController');
+const { getMiPerfil, updateMiPerfil, cancelarMiCita, addMiDireccion, getMisCitas, crearMiReseña, deleteMiDireccion } = require('../controllers/clienteController');
 
 // Ruta para obtener el perfil del usuario logueado
 router.get('/perfil', protect, getMiPerfil);
@@ -16,4 +16,11 @@ router.put('/citas/:id/cancelar', protect, cancelarMiCita);
 // Ruta para agregar una dirección
 router.post('/direcciones', protect, addMiDireccion);
 
-module.exports = router;
+// Ruta para obtener las citas del usuario logueado
+router.get('/citas', protect, getMisCitas);
+
+// Ruta para crear una reseña
+router.post('/resenas', protect, crearMiReseña);
+
+
+module.exports = router; 
