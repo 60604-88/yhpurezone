@@ -56,12 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/**
- * @function parseJwt
- * @description Decodifica un token JWT para leer su contenido (payload) sin verificar la firma.
- * @param {string} token - El token JWT.
- * @returns {object | null} El payload del token decodificado, o null si hay un error.
- */
+
 function parseJwt(token) {
     try {
         // El payload está en la segunda parte del token, codificado en Base64

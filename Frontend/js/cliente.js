@@ -167,7 +167,7 @@ async function cargarCitasUsuario() {
                         </div>
                     </div>
                     <hr>
-                    <button class="btn btn-sm btn-outline-secondary me-2" disabled>Reprogramar</button>
+                    <button class="btn btn-sm btn-outline-danger me-2" onclick="reprogramarCita(${cita.id})">Reprogramar</button>
                     <button class="btn btn-sm btn-outline-danger" onclick="cancelarCita(${cita.id})">
                         <i class="bi bi-x-circle"></i> Cancelar
                     </button>
@@ -215,32 +215,87 @@ async function cargarCitasUsuario() {
 // --- 4. Funciones de Interacción (Cancelar Cita) ---
 
 async function cancelarCita(citaId) {
-    if (!confirm('¿Estás seguro de que deseas cancelar esta cita?')) {
-    return;
+    // 1. Pedimos confirmación al usuario
+    if (!confirm('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.')) {
+        return;
+    }
+
+    // 2. Obtenemos el token de autenticación
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Tu sesión ha expirado. Por favor, recarga la página.');
+        return;
     }
 
     try {
-    const response = await fetch(`/api/cliente/citas/${citaId}/cancelar`, {
-        method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}` }
-    }); // Esta API ya la tenías
+        // 3. Llamamos a la API con el método PUT y la URL correcta
+        const response = await fetch(`http://localhost:3000/api/cliente/citas/${citaId}/cancelar`, {
+            method: 'PUT', 
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-    if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.message || 'No se pudo cancelar la cita');
-    }
+        const data = await response.json();
+        
+        // 4. Verificamos la respuesta
+        if (!response.ok) {
+            // Si la API nos da un error (ej. 404, 500), lo mostramos
+            throw new Error(data.message || 'No se pudo cancelar la cita.');
+        }
 
-    alert('Cita cancelada exitosamente.');
-    window.location.reload(); // Recargamos la página para ver los cambios
+        // 5. ¡Éxito!
+        alert('Cita cancelada exitosamente.');
+        window.location.reload(); // Recargamos la página para que la cita pase al historial
 
     } catch (error) {
-    console.error('Error al cancelar cita:', error);
-    alert(`Error: ${error.message}`);
+        console.error('Error al cancelar cita:', error);
+        alert(`Error: ${error.message}`);
     }
 }
 
-// (Aquí iría la lógica para los modales de "Editar Perfil" y "Dejar Reseña")
-// function abrirModalReseña(citaId) { ... } 
+// --- Funcion para reprogramar citas (cancela la cita para reagendar) ---
+async function reprogramarCita(citaId) {
+    // 1. Confirmamos la acción con el usuario
+    const confirmacion = confirm('Esto cancelará tu cita actual y te llevará a la calculadora para agendar una nueva fecha. ¿Deseas continuar?');
+    
+    if (!confirmacion) {
+        return; // Si el usuario dice "No", no hacemos nada.
+    }
+
+    // 2. Obtenemos el token
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Tu sesión ha expirado. Por favor, recarga la página.');
+        return;
+    }
+
+    try {
+        // 3. Llamamos a la MISMA API de "cancelar"
+        const response = await fetch(`http://localhost:3000/api/cliente/citas/${citaId}/cancelar`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || 'No se pudo cancelar la cita para reprogramar.');
+        }
+
+        // 4. ¡Éxito! Esta es la única parte diferente
+        alert('Cita actual cancelada. Serás redirigido a la calculadora para elegir una nueva fecha.');
+        
+        // 5. Redirigimos a la calculadora
+        window.location.href = 'index.html'; 
+
+    } catch (error) {
+        // 6. Manejo de errores
+        console.error('Error al reprogramar cita:', error);
+        alert(`Error: ${error.message}`);
+    }
+}
 
 // --- 5. Funciones Utilitarias ---
 

@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('authToken', data.token);
                 showAlert('Inicio de sesión exitoso. Redirigiendo...', 'success', alertContainer);
                 
-                // Espera un momento, cierra el modal y recarga la página
+                // Delay de inicio exitoso
                 setTimeout(() => {
                     if (authModal) authModal.hide();
-                    window.location.reload(); // Recargar la página actualiza la navbar y todo lo demás
+                    window.location.reload(); // Recargar la página 
                 }, 1000);
 
             } catch (error) {
@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 showAlert('¡Registro exitoso! Por favor, ve a la pestaña de Iniciar Sesión para entrar.', 'success', alertContainer);
                 // Limpiamos el formulario
                 registerForm.reset();
-                // Opcional: cambiar automáticamente a la pestaña de login
                 document.getElementById('login-tab').click();
 
             } catch (error) {
