@@ -2,12 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 const { protect, isAdmin } = require('../middleware/authMiddleware');
-const { bloquearHorario } = require('../controllers/disponibilidadController');
+const { bloquearHorario, getAllBloqueos, deleteBloqueo  } = require('../controllers/disponibilidadController');
 // funciones del adminController
 const { getAllClientes, createCitaAdmin, createServicio, updateServicio, deleteServicio, deleteCliente, deleteServicioPermanente, getAllServiciosAdmin, addServicioOpcion, addOpcionVariacion} = require('../controllers/adminController');
 
-// --- Rutas de Disponibilidad ---
+// --- Rutas de Disponibilidad (Bloquear horario) ---
 router.post('/disponibilidad/bloquear', protect, isAdmin, bloquearHorario);
+
+// --- Rutas de Disponibilidad (Ver HorariosBloqueados) ---
+router.get('/disponibilidad', protect, isAdmin, getAllBloqueos);
+
+// --- Rutas de Disponibilidad (Eliminar HorarioBloqueado)---
+router.delete('/disponibilidad/:id', protect, isAdmin, deleteBloqueo);
 
 // --- Rutas de Clientes ---
 router.get('/clientes', protect, isAdmin, getAllClientes);

@@ -14,8 +14,6 @@ const bloquearHorario = async (req, res) => {
     }
 };
 
-// PÚBLICO: Función para obtener los horarios disponibles
-// En backend/controllers/disponibilidadController.js
 
 const getDisponibilidad = async (req, res) => {
     try {
@@ -49,9 +47,6 @@ const getDisponibilidad = async (req, res) => {
                 );
                 if (estaBloqueado) continue;
 
-                // --- LÍNEA MODIFICADA ---
-                // En lugar de formatear, enviamos el objeto Date directamente.
-                // res.json() lo convertirá al formato estándar ISO 8601 (con la 'Z') que JavaScript entiende.
                 slotsDisponibles.push(slotActual);
             }
         }
@@ -63,7 +58,38 @@ const getDisponibilidad = async (req, res) => {
     }
 };
 
+// ADMIN: Función para OBTENER todos los bloqueos existentes
+const getAllBloqueos = async (req, res) => {
+    try {
+        const sql = 'SELECT * FROM bloqueos_disponibilidad ORDER BY fecha_hora_inicio DESC';
+        const [bloqueos] = await db.query(sql);
+        res.json(bloqueos);
+    } catch (error) {
+        console.error('Error al obtener los bloqueos:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
+// ADMIN: Función para ELIMINAR un bloqueo
+const deleteBloqueo = async (req, res) => {
+    try {
+        const { id } = req.params; // ID del bloqueo a eliminar
+        const sql = 'DELETE FROM bloqueos_disponibilidad WHERE id = ?';
+        const [result] = await db.query(sql, [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Bloqueo no encontrado.' });
+        }
+        res.json({ message: 'Bloqueo eliminado exitosamente' });
+    } catch (error) {
+        console.error('Error al eliminar el bloqueo:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
 module.exports = {
     bloquearHorario,
-    getDisponibilidad
+    getDisponibilidad,
+    getAllBloqueos,
+    deleteBloqueo
 };

@@ -150,11 +150,6 @@ const deleteServicioPermanente = async (req, res) => {
 };
 
 // Obtiene TODOS los servicios (activos e inactivos) para el panel de admin
-/**
- * @function getAllServiciosAdmin
- * @description Obtiene TODOS los servicios (activos e inactivos) y los devuelve
- * en una estructura anidada con sus opciones y variaciones de precio.
- */
 const getAllServiciosAdmin = async (req, res) => {
     try {
         // 1. Obtenemos los datos de las tres tablas relacionadas
