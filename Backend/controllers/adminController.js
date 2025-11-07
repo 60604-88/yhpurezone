@@ -3,7 +3,7 @@ const db = require('../config/db');
 // Función para obtener todos los usuarios con el rol 'cliente'
 const getAllClientes = async (req, res) => {
     try {
-        // Seleccionamos solo los campos necesarios para no exponer datos sensibles como el hash de la contraseña.
+        
         const sql = "SELECT id, nombre_completo, email, telefono, fecha_creacion FROM usuarios WHERE rol = 'cliente' ORDER BY fecha_creacion DESC";
         
         const [clientes] = await db.query(sql);

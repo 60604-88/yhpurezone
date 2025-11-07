@@ -6,14 +6,11 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// --- 1. MIDDLEWARES ---
-// Se configuran ANTES de las rutas.
 
-// Habilita CORS para todas las rutas. Es una buena práctica tenerlo.
+// Habilita CORS para todas las rutas.
 app.use(cors()); 
 
 // Middleware para que Express pueda entender el JSON de los bodies de las peticiones POST y PUT.
-// ESTA ES LA LÍNEA CLAVE QUE ARREGLA TU PROBLEMA DE LOGIN.
 app.use(express.json());
 
 // Middleware para servir los archivos estáticos del frontend (HTML, CSS, JS de la carpeta 'frontend').

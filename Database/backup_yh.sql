@@ -37,7 +37,7 @@ CREATE TABLE `bloqueos_disponibilidad` (
   `motivo` varchar(255) DEFAULT NULL,
   `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +46,7 @@ CREATE TABLE `bloqueos_disponibilidad` (
 
 LOCK TABLES `bloqueos_disponibilidad` WRITE;
 /*!40000 ALTER TABLE `bloqueos_disponibilidad` DISABLE KEYS */;
+INSERT INTO `bloqueos_disponibilidad` VALUES (3,'2025-11-02 08:00:00','2025-11-02 20:00:00','Festivo','2025-11-03 00:28:36');
 /*!40000 ALTER TABLE `bloqueos_disponibilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +70,7 @@ CREATE TABLE `citas` (
   KEY `direccion_id` (`direccion_id`),
   CONSTRAINT `citas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `citas_ibfk_2` FOREIGN KEY (`direccion_id`) REFERENCES `direcciones` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +79,7 @@ CREATE TABLE `citas` (
 
 LOCK TABLES `citas` WRITE;
 /*!40000 ALTER TABLE `citas` DISABLE KEYS */;
-INSERT INTO `citas` VALUES (1,5,5,'2025-10-25 13:00:00',40000.00,'completada','2025-10-25 01:05:14'),(2,5,5,'2025-10-25 13:00:00',75000.00,'completada','2025-10-25 02:44:47');
+INSERT INTO `citas` VALUES (1,5,5,'2025-10-25 13:00:00',40000.00,'completada','2025-10-25 01:05:14'),(2,5,5,'2025-10-25 13:00:00',75000.00,'completada','2025-10-25 02:44:47'),(3,5,5,'2025-10-29 17:00:00',50000.00,'completada','2025-10-28 02:15:12'),(4,5,5,'2025-11-11 17:00:00',40000.00,'cancelada','2025-11-02 18:32:49'),(5,5,5,'2025-11-06 17:00:00',60000.00,'cancelada','2025-11-02 19:05:36'),(6,8,6,'2025-11-06 13:00:00',40000.00,'completada','2025-11-06 00:03:49'),(7,5,5,'2025-11-14 21:00:00',100000.00,'cancelada','2025-11-07 00:23:59'),(8,5,5,'2025-11-13 15:00:00',40000.00,'cancelada','2025-11-07 00:24:19');
 /*!40000 ALTER TABLE `citas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +101,7 @@ CREATE TABLE `citas_servicios` (
   KEY `fk_citas_variaciones` (`opcion_variacion_id`),
   CONSTRAINT `citas_servicios_ibfk_1` FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_citas_variaciones` FOREIGN KEY (`opcion_variacion_id`) REFERENCES `opcion_variaciones` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +110,7 @@ CREATE TABLE `citas_servicios` (
 
 LOCK TABLES `citas_servicios` WRITE;
 /*!40000 ALTER TABLE `citas_servicios` DISABLE KEYS */;
-INSERT INTO `citas_servicios` VALUES (1,1,1,1,40000.00),(2,2,14,1,50000.00),(3,2,21,1,25000.00);
+INSERT INTO `citas_servicios` VALUES (1,1,1,1,40000.00),(2,2,14,1,50000.00),(3,2,21,1,25000.00),(4,3,10,1,0.00),(5,3,12,1,50000.00),(6,4,10,1,0.00),(7,4,13,1,40000.00),(8,5,11,1,10000.00),(9,5,12,1,50000.00),(10,6,1,1,40000.00),(11,7,7,1,100000.00),(12,8,1,1,40000.00);
 /*!40000 ALTER TABLE `citas_servicios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +131,7 @@ CREATE TABLE `direcciones` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `direcciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +140,7 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
-INSERT INTO `direcciones` VALUES (1,2,'Avenida Siempre Viva 742','Cali',NULL,1),(3,2,'Oficina Principal, Torre Alfa','Cali',NULL,0),(4,2,'Carrera 5 # 6 - 78','Cali','Apto 301, Edificio El Roble',0),(5,5,'Calle 41 # 42 - 18','Palmira','Casa enrejada',0);
+INSERT INTO `direcciones` VALUES (5,5,'Calle 41 # 42 - 18','Palmira','Casa enrejada',0),(6,8,'Cll 42 42 17','Palmira','Casa Blanca',0);
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +159,7 @@ CREATE TABLE `opcion_variaciones` (
   PRIMARY KEY (`id`),
   KEY `opcion_id` (`opcion_id`),
   CONSTRAINT `opcion_variaciones_ibfk_1` FOREIGN KEY (`opcion_id`) REFERENCES `servicio_opciones` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +192,7 @@ CREATE TABLE `reseñas` (
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `reseñas_ibfk_1` FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`),
   CONSTRAINT `reseñas_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +201,7 @@ CREATE TABLE `reseñas` (
 
 LOCK TABLES `reseñas` WRITE;
 /*!40000 ALTER TABLE `reseñas` DISABLE KEYS */;
-INSERT INTO `reseñas` VALUES (1,1,5,4,'dr',0,'2025-10-25 02:07:13'),(2,2,5,4,'Epa Epa',0,'2025-10-25 02:46:30');
+INSERT INTO `reseñas` VALUES (1,1,5,4,'dr',0,'2025-10-25 02:07:13'),(2,2,5,4,'Epa Epa',0,'2025-10-25 02:46:30'),(3,6,8,4,'Ta goood',0,'2025-11-06 00:05:31'),(4,3,5,4,'ta good',0,'2025-11-07 00:25:03');
 /*!40000 ALTER TABLE `reseñas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +219,7 @@ CREATE TABLE `servicio_opciones` (
   PRIMARY KEY (`id`),
   KEY `servicio_id` (`servicio_id`),
   CONSTRAINT `servicio_opciones_ibfk_1` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +246,7 @@ CREATE TABLE `servicios` (
   `categoria` enum('Vehículos','Muebles','Colchones') NOT NULL,
   `esta_activo` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +276,7 @@ CREATE TABLE `usuarios` (
   `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +285,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Administrador Principal','admin@yhpurezone.com','0000000000','$2b$10$nxAyl4YM08/EstXlPu7RGO64v1dtqFLDfmErvCBb6teOQi5vqPLee','admin','2025-09-30 04:04:52'),(2,'Ana Lucía García Rojas','ana.garcia@email.com','3117654321','$2b$10$vNJkOz/BWsBJszCi1uruP.U..yjofa7OgO.OLZVBp6VCEoyLYbUm6','cliente','2025-09-30 04:05:30'),(4,'Johan Stiven Jojoa ','stven.jojoa@gmail.com','3100563377','$2b$10$CM902ExIDxPi6SdKN5WwUOux67W015y2ywrfZLiMl8bcUI45Pc5Se','cliente','2025-10-01 20:32:50'),(5,'Juan David Gamba','jDgamba@gmail.com','3100553388','$2b$10$3Oa.2PPYRXaebyRHElnXXOurs6Ke9BkZ2WlPqYdd0JijKeJkauNlG','cliente','2025-10-03 03:45:21'),(6,'Brian Andres','bag2@gmail.com','3002563232','$2b$10$2KS/cL1g5aF1qStPlfuIHeiAjAncy.C60FO1Bnm1Zc5O3Ur2Ves9e','cliente','2025-10-04 02:32:05');
+INSERT INTO `usuarios` VALUES (1,'Administrador Principal','admin@yhpurezone.com','0000000000','$2b$10$nxAyl4YM08/EstXlPu7RGO64v1dtqFLDfmErvCBb6teOQi5vqPLee','admin','2025-09-30 04:04:52'),(5,'Juan David Gamba','jDgamba@gmail.com','3100553388','$2b$10$3Oa.2PPYRXaebyRHElnXXOurs6Ke9BkZ2WlPqYdd0JijKeJkauNlG','cliente','2025-10-03 03:45:21'),(8,'Johan Jojoa','jojoa_s7@gmail.com','3102625377','$2b$10$A6U7xGq/XHLjBWNwgklNZ.hV4iP2qPHYXc.liWpeFOiR/xkG19XjC','cliente','2025-11-06 00:01:56');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -297,4 +298,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-27 21:10:33
+-- Dump completed on 2025-11-07 13:28:17

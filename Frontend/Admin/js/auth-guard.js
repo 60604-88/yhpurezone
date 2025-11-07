@@ -15,7 +15,7 @@
             window.location.href = '../index.html';
             return;
         }
-        // Si el rol no es 'admin', lo sacamos.
+        // Si el rol no es 'admin', se devuelve al index
         if (payload.rol !== 'admin') {
             alert('Acceso denegado. No tienes permisos de administrador.');
             window.location.href = '../index.html';

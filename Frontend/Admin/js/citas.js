@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Rellena el modal con la información de una cita específica.
-     * @param {number} citaId - El ID de la cita a mostrar.
      */
     function populateModal(citaId) {
         const modalBody = document.getElementById('modal-body-content');
@@ -100,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Llama a la API para actualizar el estado de una cita.
-     * @param {number} citaId - El ID de la cita a actualizar.
      */
     async function updateCitaStatus(citaId) {
         const nuevoEstado = document.getElementById('status-select').value;

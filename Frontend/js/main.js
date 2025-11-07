@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (token) {
         // --- CASO 1: El usuario SÍ ha iniciado sesión ---
-        const user = parseJwt(token); // Decodificamos el token para obtener sus datos (id y rol)
+        const user = parseJwt(token); // Decodificar para los datos 
 
         // Ocultamos el botón de "Iniciar Sesión"
         if (loginButton) {
@@ -28,13 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Si el rol del usuario en el token es 'admin', mostramos el botón de Admin
         if (user && user.rol === 'admin' && adminButton) {
             adminButton.style.display = 'block';
+            accountButton.style.display = 'none';
         }
         
         // Añadimos la funcionalidad al botón de "Cerrar Sesión"
         if (logoutButton) {
             logoutButton.addEventListener('click', () => {
-                localStorage.removeItem('authToken'); // Borramos el token del almacenamiento
-                window.location.reload(); // Recargamos la página para actualizar la vista
+                localStorage.removeItem('authToken'); 
+                window.location.reload();
             });
         }
 
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function parseJwt(token) {
     try {
-        // El payload está en la segunda parte del token, codificado en Base64
+
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {

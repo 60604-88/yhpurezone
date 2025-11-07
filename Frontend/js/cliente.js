@@ -61,7 +61,6 @@ async function cargarPerfilUsuario() {
 // --- 2. Cargar Citas (Próximas e Historial) ---
 async function cargarCitasUsuario() {
     try {
-    // Usamos la API que creamos en el Paso 1
         const response = await fetch('http://localhost:3000/api/cliente/citas', {
             headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -79,7 +78,7 @@ async function cargarCitasUsuario() {
         citasParaReseñar.forEach(cita => {
         const servicioNombres = cita.servicios.join(', ') || 'Servicio';
         
-        // Usamos la función onclick="abrirModalReseña()" que ya creamos
+        // Usamos la función onclick="abrirModalReseña()"
         serviciosHtml += `
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span>${servicioNombres}</span>
@@ -284,7 +283,7 @@ async function reprogramarCita(citaId) {
             throw new Error(data.message || 'No se pudo cancelar la cita para reprogramar.');
         }
 
-        // 4. ¡Éxito! Esta es la única parte diferente
+        // 4. ¡Éxito! 
         alert('Cita actual cancelada. Serás redirigido a la calculadora para elegir una nueva fecha.');
         
         // 5. Redirigimos a la calculadora

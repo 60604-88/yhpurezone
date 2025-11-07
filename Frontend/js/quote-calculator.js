@@ -1,7 +1,3 @@
-/**
- * @description Maneja toda la lógica interactiva de la página de inicio, incluyendo
- * la calculadora de cotizaciones y el flujo completo de agendamiento de citas.
- */
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -84,10 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Orquesta las acciones que ocurren al seleccionar un servicio.
-     * @param {object} service - El servicio en el que el usuario hizo clic.
-     */
+
     function handleServiceSelection(service) {
         selectedService = service;
         currentSelections = {};
@@ -97,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         renderOptionsForService(service);
-        quoteSummaryContainer.innerHTML = `<div class="text-center py-5"><i class="bi bi-card-checklist display-4 text-muted"></i><p class="text-muted mt-3">Selecciona una opción para calcular el precio.</p></div>`;
+        quoteSummaryContainer.innerHTML = `
+        <div class="text-center py-5">
+            <i class="bi bi-card-checklist display-4 text-muted"></i>
+            <p class="text-muted mt-3">Selecciona una opción para calcular el precio.</p>
+        </div>`;
     }
 
-    /**
-     * Dibuja las opciones dinámicas (radio buttons, etc.) para el servicio seleccionado.
-     * @param {object} service - El servicio seleccionado.
-     */
     function renderOptionsForService(service) {
         dynamicOptionsContainer.innerHTML = '';
         service.opciones.forEach(opcion => {
@@ -114,7 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const controlId = `variacion-${variacion.id}`;
                 const control = document.createElement('div');
                 control.className = 'form-check';
-                control.innerHTML = `<input class="form-check-input" type="radio" name="opcion-${opcion.id}" id="${controlId}" value="${variacion.id}"><label class="form-check-label" for="${controlId}">${variacion.nombre} (+${parseFloat(variacion.precio).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })})</label>`;
+                control.innerHTML = `
+                <input class="form-check-input" type="radio" name="opcion-${opcion.id}" id="${controlId}" value="${variacion.id}">
+                <label class="form-check-label" for="${controlId}">${variacion.nombre} (+${parseFloat(variacion.precio).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })})</label>`;
                 optionWrapper.appendChild(control);
                 control.querySelector('input').addEventListener('change', (e) => {
                     if (e.target.checked) {
@@ -139,12 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const variacion = opcion.variaciones.find(v => v.id == variacionId);
             if (variacion) {
                 totalPrice += parseFloat(variacion.precio);
-                breakdownHTML += `<div class="d-flex justify-content-between small mt-2"><span>${opcion.nombre}: ${variacion.nombre}</span><span>${parseFloat(variacion.precio).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span></div>`;
+                breakdownHTML += `
+                <div class="d-flex justify-content-between small mt-2">
+                    <span>${opcion.nombre}: ${variacion.nombre}</span>
+                    <span>${parseFloat(variacion.precio).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</span>
+                </div>`;
             }
-        }
+        };
         finalQuote = {
             price: totalPrice,
-            breakdownHTML: `<div class="text-center"><p class="text-muted mb-1">Total Estimado</p><h4 class="fw-bold text-primary mb-3">${totalPrice.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</h4></div><hr class="my-3">${breakdownHTML}`
+            breakdownHTML: `
+            <div class="text-center">
+                <p class="text-muted mb-1">Total Estimado</p>
+                <h4 class="fw-bold text-primary mb-3">${totalPrice.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}</h4>
+            </div><hr class="my-3">${breakdownHTML}`
         };
         quoteSummaryContainer.innerHTML = `${finalQuote.breakdownHTML}<div class="d-grid mt-4"><button id="agendar-ahora-btn" class="btn btn-primary btn-lg">Agendar Ahora</button></div>`;
     }
@@ -261,7 +264,23 @@ document.addEventListener('DOMContentLoaded', () => {
      * Dibuja el formulario para añadir una dirección nueva.
      */
     function renderNewAddressForm(container) {
-        container.innerHTML = `<form id="new-address-form" class="mt-3 border p-3 rounded"><h6 class="fw-bold small">Nueva Dirección</h6><div class="mb-2"><label for="direccion_calle" class="form-label small">Dirección</label><input type="text" id="direccion_calle" class="form-control" required></div><div class="mb-2"><label for="ciudad" class="form-label small">Ciudad</label><input type="text" id="ciudad" class="form-control" required></div><div class="mb-3"><label for="detalles" class="form-label small">Detalles</label><input type="text" id="detalles" class="form-control"></div><button type="submit" class="btn btn-sm btn-success">Guardar Dirección</button></form>`;
+        container.innerHTML = `
+        <form id="new-address-form" class="mt-3 border p-3 rounded">
+            <h6 class="fw-bold small">Nueva Dirección</h6>
+            <div class="mb-2">
+                <label for="direccion_calle" class="form-label small">Dirección</label>
+                <input type="text" id="direccion_calle" class="form-control" required>
+            </div>
+            <div class="mb-2">
+                <label for="ciudad" class="form-label small">Ciudad</label>
+                <input type="text" id="ciudad" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="detalles" class="form-label small">Detalles</label>
+                <input type="text" id="detalles" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-sm btn-success">Guardar Dirección</button>
+        </form>`;
         document.getElementById('new-address-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const newAddress = { direccion_calle: document.getElementById('direccion_calle').value, ciudad: document.getElementById('ciudad').value, detalles: document.getElementById('detalles').value };
@@ -370,10 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * @function parseJwt
-     * @description Decodifica un token JWT para leer su contenido (payload).
-     */
     function parseJwt(token) {
         try {
             const base64Url = token.split('.')[1];
